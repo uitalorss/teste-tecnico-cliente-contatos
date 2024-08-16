@@ -9,6 +9,7 @@ export class UserEmail {
   email: string;
   @ManyToOne(() => User, user => user.userEmails, {
     cascade: true,
+    onDelete: "CASCADE",
   })
   @JoinColumn({ name: "user_id" })
   user: User;

@@ -9,6 +9,7 @@ export class UserPhone {
   phone: string;
   @ManyToOne(() => User, user => user.userPhones, {
     cascade: true,
+    onDelete: "CASCADE",
   })
   @JoinColumn({ name: "user_id" })
   user: User;
