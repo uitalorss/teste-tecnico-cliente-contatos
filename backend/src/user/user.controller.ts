@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Res } from "@nestjs/common";
+import { Body, Controller, Delete, Get, HttpCode, Param, Post, Res } from "@nestjs/common";
 import { UserService } from "./user.service";
 import { ZodValidationPipe } from "nestjs-zod";
 import { CreateUserDTO, createUserSchema } from "./dto/create-user.dto";
@@ -25,5 +25,12 @@ export class UserController {
   public async create(@Res() res, @Body(new ZodValidationPipe(createUserSchema)) createUserDTO: CreateUserDTO) {
     const newUser = await this.userService.create(createUserDTO);
     return res.json(instanceToInstance(newUser));
+  }
+
+  @HttpCode(204)
+  @Delete(":id")
+  public async delete(@Res() res, @Param("id") id: string) {
+    await this.userService.remove(id);
+    return res.send();
   }
 }

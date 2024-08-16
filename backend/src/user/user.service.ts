@@ -61,6 +61,17 @@ export class UserService {
     return user;
   }
 
+  public async remove(id: string) {
+    const user = await this.userRepository.findOneBy({
+      id,
+    });
+    if (!user) {
+      throw new NotFoundException("Usuário não encontrado.");
+    }
+
+    await this.userRepository.remove(user);
+  }
+
   private async createEmails(email: string, user: User) {
     const isEmailExists = await this.userEmailRepository.findOneBy({
       email,
