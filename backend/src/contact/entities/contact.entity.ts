@@ -11,7 +11,7 @@ export class Contact {
   name: string;
   @OneToMany(() => ContactEmail, contactEmail => contactEmail.contact)
   contactEmails: ContactEmail[];
-  @OneToMany(() => ContactPhone, contactPhone => contactPhone.phone)
+  @OneToMany(() => ContactPhone, contactPhone => contactPhone.contact)
   contactPhones: ContactPhone[];
   @ManyToOne(() => User, user => user.contacts, {
     cascade: true,

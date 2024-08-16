@@ -25,6 +25,7 @@ export class UserService {
       relations: {
         userEmails: true,
         userPhones: true,
+        contacts: true,
       },
     });
     return users;
@@ -38,9 +39,9 @@ export class UserService {
       relations: {
         userEmails: true,
         userPhones: true,
+        contacts: true,
       },
     });
-
     if (!user) {
       throw new NotFoundException("Usuário não encontrado.");
     }
