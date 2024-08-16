@@ -30,7 +30,7 @@ export class UserService {
     return users;
   }
 
-  public async findUser(id: string) {
+  public async findUser(id: string): Promise<ResponseUserDTO> {
     const user = await this.userRepository.findOne({
       where: {
         id,
