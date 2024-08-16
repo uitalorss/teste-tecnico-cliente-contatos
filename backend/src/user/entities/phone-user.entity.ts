@@ -1,6 +1,7 @@
-import { Column, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { User } from "./user.entity";
 
+@Entity("userPhones")
 export class UserPhone {
   @PrimaryGeneratedColumn("uuid")
   id: string;
