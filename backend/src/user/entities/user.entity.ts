@@ -1,6 +1,7 @@
 import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { UserEmail } from "./email-user.entity";
 import { UserPhone } from "./phone-user.entity";
+import { Contact } from "src/contact/entities/contact.entity";
 
 @Entity("users")
 export class User {
@@ -14,6 +15,8 @@ export class User {
   userEmails: UserEmail[];
   @OneToMany(() => UserPhone, userPhone => userPhone.user)
   userPhones: UserPhone[];
+  @OneToMany(() => Contact, contact => contact.user)
+  contacts: Contact[];
   @CreateDateColumn({ type: "timestamptz" })
   created_at: Date;
 }
