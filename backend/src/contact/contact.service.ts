@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { BadRequestException, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Contact } from "./entities/contact.entity";
 import { Repository } from "typeorm";
@@ -6,6 +6,7 @@ import { ContactEmail } from "./entities/email-contact.entity";
 import { ContactPhone } from "./entities/phone-contact.entity";
 import { UserService } from "src/user/user.service";
 import { CreateContactDTO } from "./dto/create-contact.dto";
+import { DeleteContactDTO } from "./dto/delete-contact.dto";
 
 @Injectable()
 export class ContactService {
@@ -40,19 +41,33 @@ export class ContactService {
 
   public async find(user_id: string) {
     const user = await this.userService.findUser(user_id);
-    console.log(user.contacts);
     const queryBuilder = this.contactRepository
       .createQueryBuilder("contacts")
       .leftJoinAndSelect("contacts.contactEmails", "contactEmails")
       .leftJoinAndSelect("contacts.contactPhones", "contactPhones")
       .where("user_id = :id", { id: user.id });
     const contacts = await queryBuilder.getMany();
-    console.log(contacts);
     return contacts;
   }
 
   public async update() {}
-  public async delete() {}
+  public async remove({ contact_id, user_id }: DeleteContactDTO) {
+    const contact = await this.contactRepository.findOne({
+      where: {
+        id: contact_id,
+      },
+      relations: {
+        user: true,
+      },
+    });
+    if (!contact) {
+      throw new NotFoundException("Contato não encontrado.");
+    }
+    if (contact.user.id !== user_id) {
+      throw new BadRequestException("Contato não atribuído a sua conta.");
+    }
+    await this.contactRepository.remove(contact);
+  }
 
   private async createContactEmails(email: string, contact: Contact) {
     const validEmail = this.contactEmailRepository.create({ email, contact });
