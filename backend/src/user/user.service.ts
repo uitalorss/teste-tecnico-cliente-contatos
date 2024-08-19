@@ -6,6 +6,7 @@ import { UserEmail } from "./entities/email-user.entity";
 import { UserPhone } from "./entities/phone-user.entity";
 import { ResponseUserDTO } from "./dto/response-user.dto";
 import { CreateUserDTO } from "./dto/create-user.dto";
+import { UpdateUserDTO } from "./dto/update-user.dto";
 
 @Injectable()
 export class UserService {
@@ -73,6 +74,50 @@ export class UserService {
     await this.userRepository.remove(user);
   }
 
+  public async update({ user_id, name, username, emails, phones }: UpdateUserDTO) {
+    const isUserExists = await this.userRepository.findOne({
+      where: {
+        id: user_id,
+      },
+      relations: {
+        userEmails: true,
+        userPhones: true,
+      },
+    });
+
+    if (!isUserExists) {
+      throw new NotFoundException("Usuário inválido.");
+    }
+
+    if (username && username !== isUserExists.userName) {
+      const verifyUserName = await this.userRepository.findOne({
+        where: {
+          userName: username,
+        },
+      });
+      if (verifyUserName) {
+        throw new BadRequestException(`username ${username} já em uso`);
+      }
+    }
+
+    const updateUser = await this.userRepository.preload({
+      id: user_id,
+      name,
+      userName: username,
+    });
+    await this.userRepository.save(updateUser);
+
+    if (emails) {
+      await this.resetUserEmails(isUserExists);
+      await Promise.all(emails.map(item => this.updateEmails(item, updateUser)));
+    }
+
+    if (phones) {
+      await this.resetUserPhones(isUserExists);
+      await Promise.all(phones.map(item => this.updatePhones(item, updateUser)));
+    }
+  }
+
   private async createEmails(email: string, user: User) {
     const isEmailExists = await this.userEmailRepository.findOneBy({
       email,
@@ -97,5 +142,23 @@ export class UserService {
       await this.userRepository.remove(user);
       throw new BadRequestException(`Telefone ${phone} já pertence a outro usuário. Usuário não cadastrado.`);
     }
+  }
+
+  private async updateEmails(email: string, user: User) {
+    const validEmail = this.userEmailRepository.create({ email, user });
+    await this.userEmailRepository.save(validEmail);
+  }
+
+  private async updatePhones(phone: string, user: User) {
+    const validPhone = this.userPhoneRepository.create({ phone, user });
+    await this.userPhoneRepository.save(validPhone);
+  }
+
+  private async resetUserEmails(user: User) {
+    user.userEmails.map(async item => this.userEmailRepository.remove(item));
+  }
+
+  private async resetUserPhones(user: User) {
+    user.userPhones.map(async item => await this.userPhoneRepository.remove(item));
   }
 }

@@ -1,9 +1,10 @@
-import { Body, Controller, Delete, Get, HttpCode, Param, Post, Res } from "@nestjs/common";
+import { Body, Controller, Delete, Get, HttpCode, Param, Post, Put, Res } from "@nestjs/common";
 import { UserService } from "./user.service";
 import { ZodValidationPipe } from "nestjs-zod";
 import { CreateUserDTO, createUserSchema } from "./dto/create-user.dto";
 import { instanceToInstance } from "class-transformer";
 import { ResponseUserDTO } from "./dto/response-user.dto";
+import { partialUserSchema, UpdateUserDTO } from "./dto/update-user.dto";
 
 @Controller("user")
 export class UserController {
@@ -31,6 +32,13 @@ export class UserController {
   @Delete(":id")
   public async delete(@Res() res, @Param("id") id: string) {
     await this.userService.remove(id);
+    return res.send();
+  }
+
+  @HttpCode(204)
+  @Put(":id")
+  public async update(@Res() res, @Param("id") id: string, @Body(new ZodValidationPipe(partialUserSchema)) updateUserDTO: UpdateUserDTO) {
+    await this.userService.update({ user_id: id, name: updateUserDTO.name, username: updateUserDTO.username, emails: updateUserDTO.emails, phones: updateUserDTO.phones });
     return res.send();
   }
 }
