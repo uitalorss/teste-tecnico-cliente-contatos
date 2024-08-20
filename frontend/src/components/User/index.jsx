@@ -2,6 +2,7 @@ import { ItemUserContainer, UserContainer } from "./styles";
 
 
 export const User = ({user}) => {
+    console.log(user)
     return(
         <UserContainer>
             <ItemUserContainer>

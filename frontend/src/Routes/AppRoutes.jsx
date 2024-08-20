@@ -1,15 +1,33 @@
-import { Route, Routes } from "react-router-dom"
+import { createBrowserRouter, RouterProvider } from "react-router-dom"
 import { Login } from "../Pages/Login"
 import { SignUp } from "../Pages/SignUp"
 import { Admin } from "../Pages/admin"
+import { Dashboard } from "../Pages/Dashboard"
 
 
 export const AppRoutes = () => {
-    return(
-        <Routes>
-            <Route path="/" element={<Login />} />
-            <Route path="/signup" element={<SignUp />} />
-            <Route path="/admin" element={<Admin />} />
-        </Routes>
-    )
+    const routes = [
+        {
+            path: "/",
+            element: <Login />
+        },
+        {
+            path: "/signup",
+            element: <SignUp />
+        },
+        {
+            path: "/admin",
+            element: <Admin />
+        },
+        {
+            path: "/user/:userId",
+            element: <Dashboard />
+        }
+    ]
+
+    const router = createBrowserRouter([
+        ...routes
+    ])
+
+    return <RouterProvider router={router} />
 }

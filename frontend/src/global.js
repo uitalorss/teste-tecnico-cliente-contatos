@@ -54,7 +54,10 @@ export const HomeContainer = styled.div`
 `;
 
 export const NewHomeContainer = styled.div`
-    height: 100%;
+    height: 100vh;
+    max-height: 100%
     max-width: 100vw;
     background: #353b48;
+    color: #dcdde1;
+
 `

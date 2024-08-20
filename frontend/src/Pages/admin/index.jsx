@@ -12,6 +12,7 @@ export const Admin = () => {
             try {
                 const users = await axios.get("http://localhost:3000/user")
                 setListUsers(users.data);
+                console.log(users.data)
             } catch (error) {
                 console.log(error.response)
             }
