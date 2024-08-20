@@ -4,8 +4,6 @@ export const DashboardHeaderContainer = styled.div`
     padding: 2rem 1rem;
 
 `
-
-
 export const UserDataContainer = styled.div`
     margin-top: 2rem;
     width: 50%;

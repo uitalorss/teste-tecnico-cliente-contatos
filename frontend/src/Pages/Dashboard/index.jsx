@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { DefaultButton, NewHomeContainer } from "../../global"
+import { DefaultButton, MainContainer } from "../../global"
 import axios from "axios"
 import { useParams } from "react-router-dom"
 import { User } from "../../components/User"
@@ -27,7 +27,7 @@ export const Dashboard = () => {
         }, 1000)
     })
     return(
-        <NewHomeContainer>
+        <MainContainer>
             <DashboardHeaderContainer>
                 <h2>Bem vindo, {userData.name}</h2>
             </DashboardHeaderContainer>
@@ -40,6 +40,6 @@ export const Dashboard = () => {
                     <DefaultButton className="delete">Excluir conta</DefaultButton>
                 </ButtonContainer>
             </UserDataContainer>
-        </NewHomeContainer>
+        </MainContainer>
     )
 }

@@ -5,8 +5,9 @@ export const LoginContainer = styled.div`
     flex-direction: column;
     justify-content: center;
     gap: 2rem;
+    height: 100vh;
     width: 30rem;
-    height: 20rem;
+    margin: auto;
     padding: 1rem 2rem;
     color: #dcdde1;
     input{
@@ -16,5 +17,11 @@ export const LoginContainer = styled.div`
     }
     button{
         width: 100%;
+    }
+    p{
+        font-size: 1.25rem;
+    }
+    a{
+        color: #dcdde1;
     }
 `

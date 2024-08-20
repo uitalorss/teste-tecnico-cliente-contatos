@@ -1,3 +1,4 @@
+import { Contact } from "../contacts";
 import { ItemUserContainer, UserContainer } from "./styles";
 
 
@@ -28,8 +29,7 @@ export const User = ({user}) => {
                             <td >{email.email}</td>
                         </tr>
                     )
-                })}   
-                               
+                })}                
             </ItemUserContainer>
             <ItemUserContainer>
                 <tr>
@@ -44,7 +44,17 @@ export const User = ({user}) => {
                 )
             })}
             </ItemUserContainer>
-
+            <ItemUserContainer>
+                <tr>
+                    <th>Contatos</th>
+                </tr>
+                <tr className="contact-item">
+                    {user.contacts.map((contact) => {
+                    return(
+                        <Contact key={contact.id} contact={contact}/>
+                    )
+                })}</tr>
+            </ItemUserContainer>
 
         </UserContainer>
     );

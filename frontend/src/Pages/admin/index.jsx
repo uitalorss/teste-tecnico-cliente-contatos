@@ -1,8 +1,7 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
 import { User } from "../../components/User"
-import { InfoUserContainer } from "./styles"
-import { NewHomeContainer } from "../../global"
+import { AdminContainer, InfoUserContainer } from "./styles"
 
 export const Admin = () => {
     const [listUsers, setListUsers] = useState([])
@@ -20,12 +19,15 @@ export const Admin = () => {
         load();
     }, [])
     return(
-        <NewHomeContainer>
+        <AdminContainer>
+            <div className="admin-nav">
+                <h2>Usuários Cadastrados</h2>
+            </div>
             <InfoUserContainer>
                 {listUsers.map((item) => {
                     return <User key={item.id} user={item}/>
                 } )}
             </InfoUserContainer>
-        </NewHomeContainer>
+        </AdminContainer>
     )
 }

@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const UserContainer = styled.div`
+export const ContactContainer = styled.div`
     display: flex;
     flex-direction: column;
     gap: 1rem;
@@ -10,7 +10,17 @@ export const UserContainer = styled.div`
     border-radius: 8px;
 `
 
-export const ItemUserContainer = styled.table`
+export const ItemContactContainer = styled.table`
+    tr {
+        th {
+            text-align: left;
+            width: 30%;
+        }
+    }
+
+`
+
+export const Example = styled.table`
     background: #353b48;
     border-radius: 8px;
     padding: .75rem;
@@ -18,12 +28,6 @@ export const ItemUserContainer = styled.table`
         th {
             text-align: left;
             width: 20%;
-        }
-        &.contact-item{
-        display: flex;
-        flex-direction: column;
-        gap: 1rem 0;
-        margin-top: 1rem;
         }
     }
 

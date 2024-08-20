@@ -16,6 +16,10 @@ export const GlobalStyled = createGlobalStyle`
         line-height: 130%;
     }
 
+    body{
+      background: #353b48
+    }
+
     p{
         font-family: 'Titillium Web', sans-serif;
         line-height: 130%;
@@ -44,20 +48,9 @@ export const DefaultButton = styled.button`
   }
 `;
 
-export const HomeContainer = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    max-width: 100vw;
-    background: #353b48;
-`;
-
-export const NewHomeContainer = styled.div`
-    height: 100vh;
-    max-height: 100%
-    max-width: 100vw;
-    background: #353b48;
-    color: #dcdde1;
-
+export const MainContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  color: #dcdde1;
+  height: 100%;
 `

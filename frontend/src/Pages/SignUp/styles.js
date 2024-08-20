@@ -1,5 +1,25 @@
 import styled from "styled-components";
 
+export const ContentContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+`
+
+export const NavContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+  gap: .25rem;
+  padding: 2rem 3rem 0 3rem;
+  a{
+    color: #dcdde1;
+    text-decoration: none;
+  }
+`
+
 export const SignUpContainer = styled.div`
     display: flex;
     flex-direction: column;
