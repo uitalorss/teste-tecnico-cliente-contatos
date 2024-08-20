@@ -3,12 +3,14 @@ import { DefaultButton, HomeContainer } from "../../global"
 import { FormContainer, FormGroup, SignUpContainer, SpanError } from "./styles"
 import axios from "axios";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 
 
 export const SignUp = () => {
     const {register, handleSubmit} = useForm();
-    const [errorMessage, setErrorMessage] = useState("")
+    const [errorMessage, setErrorMessage] = useState("");
+    const navigate = useNavigate()
 
     const onsubmit = async (data) => {
         data.emails = data.emails.split(",");
@@ -26,7 +28,8 @@ export const SignUp = () => {
             axiosConfig
             );
             setErrorMessage("");
-            alert("Usuário cadastrado com sucesso.")
+            alert("Usuário cadastrado com sucesso.");
+            navigate("/");
         }catch(error){
             setErrorMessage(error.response.data.message)
             console.log(error.response.data.message)
