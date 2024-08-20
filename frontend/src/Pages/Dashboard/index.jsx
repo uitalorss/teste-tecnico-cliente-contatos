@@ -1,15 +1,23 @@
 import { useEffect, useState } from "react"
 import { DefaultButton, MainContainer } from "../../global"
 import axios from "axios"
-import { useParams } from "react-router-dom"
+import { Link, useParams } from "react-router-dom"
 import { User } from "../../components/User"
-import { ButtonContainer, DashboardHeaderContainer, UserDataContainer } from "./styles"
+import { ButtonContainer, DashboardHeaderContainer, HeaderUserDataContainer, UserDataContainer } from "./styles"
+import { PlusCircle, SignOut } from "phosphor-react"
+import * as Dialog from "@radix-ui/react-dialog"
+import { NewContactModal } from "../../components/NewContactModal"
 
 
 export const Dashboard = () => {
     const { userId } = useParams();
     const [userData, setUserData] = useState({})
     const [finishedTimeOut, setFinishedTimeout] = useState(false)
+    const [open, setOpen_] = useState(false);
+    function setOpen(data){
+        console.log(data)
+        setOpen_(data);
+    }
     useEffect(() => {
         async function load(){
             try {
@@ -24,16 +32,30 @@ export const Dashboard = () => {
     useEffect(() => {
         setTimeout(() => {
             setFinishedTimeout(true)
-        }, 1000)
+        }, 500)
     })
     return(
         <MainContainer>
             <DashboardHeaderContainer>
                 <h2>Bem vindo, {userData.name}</h2>
+                <Link to={"/"}>
+                    <SignOut size={32}/>
+                    <p>Sair</p>
+                </Link>
             </DashboardHeaderContainer>
-
             <UserDataContainer>
-               <h3>Seus dados</h3>
+                <HeaderUserDataContainer>
+                    <h3>Seus dados</h3>
+                    <Dialog.Root open={open} onOpenChange={setOpen}>
+                        <Dialog.Trigger asChild>
+                            <button>
+                                <PlusCircle size={16} />
+                                <span>Contato</span>
+                            </button>
+                        </Dialog.Trigger>
+                        <NewContactModal />
+                    </Dialog.Root>
+                </HeaderUserDataContainer>
                 {finishedTimeOut && <User user={userData}/>}
                 <ButtonContainer>
                     <DefaultButton>Alterar dados</DefaultButton>

@@ -1,14 +1,38 @@
 import styled from "styled-components";
 
 export const DashboardHeaderContainer = styled.div`
-    padding: 2rem 1rem;
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 1rem;
+    a{
+        color: #dcdde1;
+        text-decoration: none;    
+    }
 
 `
 export const UserDataContainer = styled.div`
-    margin-top: 2rem;
     width: 50%;
-    h3{
-        margin: 2rem 1rem;
+
+`
+
+export const HeaderUserDataContainer = styled.div`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 2rem 1rem;
+        button {
+        display: flex;
+        align-items: center;
+        gap: .25rem;
+        border: none;
+        padding: 0.5rem 0.75rem;
+        border-radius: 4px;
+        background: #10ac84;
+        color: #dcdde1;
+        font-weight: bold;
+        cursor: pointer;
     }
 `
 
