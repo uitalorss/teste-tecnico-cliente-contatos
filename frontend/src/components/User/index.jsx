@@ -1,9 +1,9 @@
+/* eslint-disable react/prop-types */
 import { Contact } from "../contacts";
 import { ItemUserContainer, UserContainer } from "./styles";
 
 
 export const User = ({user}) => {
-    console.log(user)
     return(
         <UserContainer>
             <ItemUserContainer>

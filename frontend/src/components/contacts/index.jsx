@@ -1,9 +1,14 @@
-import { DefaultButton } from "../../global";
+/* eslint-disable react/prop-types */
+import { useContext } from "react";
 import { ActionsContactContainer, ContactContainer, ItemContactContainer } from "./styles";
+import { UserContext } from "../../context/UserContext";
+import { useParams } from "react-router-dom";
 
 
 export const Contact = ({contact}) => {
-    console.log(contact)
+    const{ userId } = useParams()
+    const {deleteContact} = useContext(UserContext);
+    console.log(contact);
     return(
         <ContactContainer>
             <ItemContactContainer>
@@ -42,7 +47,7 @@ export const Contact = ({contact}) => {
                 <button>
                         <span>Atualizar</span>
                 </button>
-                <button className="delete">
+                <button className="delete" onClick={() => deleteContact(userId, contact.id)}>
                     <span>Excluir</span>
                 </button>
             </ActionsContactContainer>

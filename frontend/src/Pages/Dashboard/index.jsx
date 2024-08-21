@@ -1,39 +1,21 @@
-import { useEffect, useState } from "react"
+import { useContext, useEffect } from "react"
 import { DefaultButton, MainContainer } from "../../global"
-import axios from "axios"
 import { Link, useParams } from "react-router-dom"
 import { User } from "../../components/User"
 import { ButtonContainer, DashboardHeaderContainer, HeaderUserDataContainer, UserDataContainer } from "./styles"
 import { PlusCircle, SignOut } from "phosphor-react"
 import * as Dialog from "@radix-ui/react-dialog"
 import { NewContactModal } from "../../components/NewContactModal"
+import { UserContext } from "../../context/UserContext"
 
 
 export const Dashboard = () => {
     const { userId } = useParams();
-    const [userData, setUserData] = useState({})
-    const [finishedTimeOut, setFinishedTimeout] = useState(false)
-    const [open, setOpen_] = useState(false);
-    function setOpen(data){
-        console.log(data)
-        setOpen_(data);
-    }
+    const { userData, isLoading, load, open, setOpen } = useContext(UserContext);
+
     useEffect(() => {
-        async function load(){
-            try {
-                const user = await axios.get(`http://localhost:3000/user/${userId}`);
-                setUserData(user.data);
-            } catch (error) {
-                console.log(error.response)
-            }
-        }
-        load()
+        load(userId);
     }, [])
-    useEffect(() => {
-        setTimeout(() => {
-            setFinishedTimeout(true)
-        }, 500)
-    })
     return(
         <MainContainer>
             <DashboardHeaderContainer>
@@ -56,7 +38,11 @@ export const Dashboard = () => {
                         <NewContactModal userId={userData.id}/>
                     </Dialog.Root>
                 </HeaderUserDataContainer>
-                {finishedTimeOut && <User user={userData}/>}
+                {isLoading ? (
+                    <h2>Carregando</h2>
+                ):(
+                    <User user={userData}/>
+                )}
                 <ButtonContainer>
                     <DefaultButton>Alterar dados</DefaultButton>
                     <DefaultButton className="delete">Excluir conta</DefaultButton>
