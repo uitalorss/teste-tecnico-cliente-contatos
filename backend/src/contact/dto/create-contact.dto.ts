@@ -3,8 +3,8 @@ import { z } from "zod";
 
 export const createContactSchema = z.object({
   name: z.string({ required_error: "Campo nome é obrigatório." }).trim().min(1, "Campo não pode ficar vazio."),
-  emails: z.string().array().nonempty("Campo não pode ficar vazio"),
-  phones: z.string().length(11).array().nonempty("Campo não pode ficar vazio"),
+  emails: z.array(z.string().email({ message: "Email inválido" })).nonempty("Campo não pode ficar vazio"),
+  phones: z.array(z.string().regex(/^\(\d{2}\)\s?\d{4,5}-?\d{4}$/, { message: "Favor informar números de telefones válidos" })).nonempty("Campo não pode ficar vazio"),
 });
 
 export class CreateContactRequestDTO extends createZodDto(createContactSchema) {}

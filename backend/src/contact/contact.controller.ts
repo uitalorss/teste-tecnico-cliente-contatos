@@ -1,6 +1,6 @@
 import { Body, Controller, Delete, Get, HttpCode, Param, Post, Put, Res } from "@nestjs/common";
 import { ContactService } from "./contact.service";
-import { CreateContactRequestDTO } from "./dto/create-contact.dto";
+import { CreateContactRequestDTO, createContactSchema } from "./dto/create-contact.dto";
 import { instanceToInstance } from "class-transformer";
 import { ZodValidationPipe } from "nestjs-zod";
 import { partialContactSchema, updateContactRequestDTO } from "./dto/update-contact.dto";
@@ -11,7 +11,7 @@ export class ContactController {
 
   @Post()
   @HttpCode(201)
-  public async create(@Res() res, @Param("user_id") user_id: string, @Body() createContactRequest: CreateContactRequestDTO) {
+  public async create(@Res() res, @Param("user_id") user_id: string, @Body(new ZodValidationPipe(createContactSchema)) createContactRequest: CreateContactRequestDTO) {
     await this.contactService.create({ user_id: user_id, name: createContactRequest.name, emails: createContactRequest.emails, phones: createContactRequest.phones });
     return res.json({ message: "contato criado com sucesso." });
   }

@@ -8,8 +8,8 @@ export const createUserSchema = z.object({
     .trim()
     .min(5, "Campo precisa ter mais de 5 caracteres")
     .max(15, "campo precisa ter menos de 15 caracteres"),
-  emails: z.string().array().nonempty("Campo não pode ficar vazio"),
-  phones: z.string().length(11).array().nonempty("Campo não pode ficar vazio"),
+  emails: z.array(z.string().email({ message: "Email inválido" })).nonempty("Campo não pode ficar vazio"),
+  phones: z.array(z.string().regex(/^\(\d{2}\)\s?\d{4,5}-?\d{4}$/, { message: "Favor informar números de telefones válidos" })).nonempty("Campo não pode ficar vazio"),
 });
 
 export class CreateUserDTO extends createZodDto(createUserSchema) {}
