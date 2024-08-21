@@ -1,6 +1,6 @@
 import { useContext, useEffect } from "react"
 import { DefaultButton, MainContainer } from "../../global"
-import { Link, useParams } from "react-router-dom"
+import { Link, useNavigate, useParams } from "react-router-dom"
 import { User } from "../../components/User"
 import { ButtonContainer, DashboardHeaderContainer, HeaderUserDataContainer, UserDataContainer } from "./styles"
 import { PlusCircle, SignOut } from "phosphor-react"
@@ -12,6 +12,7 @@ import { UserContext } from "../../context/UserContext"
 export const Dashboard = () => {
     const { userId } = useParams();
     const { userData, isLoading, load, open, setOpen, deleteUser } = useContext(UserContext);
+    const navigate = useNavigate()
 
     useEffect(() => {
         load(userId);
@@ -44,7 +45,11 @@ export const Dashboard = () => {
                     <User user={userData}/>
                 )}
                 <ButtonContainer>
-                    <DefaultButton>Alterar dados</DefaultButton>
+                    <DefaultButton >
+                        <Link to={`/user/${userId}/update`}>
+                            Alterar dados
+                        </Link>
+                    </DefaultButton>
                     <DefaultButton className="delete" onClick={() => deleteUser(userId)}>Excluir conta</DefaultButton>
                 </ButtonContainer>
             </UserDataContainer>

@@ -37,20 +37,23 @@ export const ActionsContactContainer = styled.div`
     display: flex;
     gap: 1rem;
     margin-top: 1rem;
-    
-    button {
-    display: flex;
-    align-items: center;
-    gap: .25rem;
-    border: none;
-    padding: 0.5rem 0.75rem;
-    border-radius: 4px;
-    background: #10ac84;
-    color: #dcdde1;
-    font-weight: bold;
-    cursor: pointer;
-    &.delete{
-        background: #c23616
+    &.inactive {
+        display: none;
     }
+    button {
+        display: flex;
+        align-items: center;
+        gap: .25rem;
+        border: none;
+        padding: 0.5rem 0.75rem;
+        border-radius: 4px;
+        background: #10ac84;
+        color: #dcdde1;
+        font-weight: bold;
+        cursor: pointer;
+        &.delete{
+            background: #c23616
+        };
+
 }
 `

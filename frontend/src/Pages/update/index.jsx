@@ -1,35 +1,50 @@
 import { useForm } from "react-hook-form"
 import { DefaultButton, MainContainer, SpanError } from "../../global"
 import { ContentContainer, FormContainer, FormGroup, NavContainer, SignUpContainer } from "./styles"
-import { useContext } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useContext, useEffect } from "react";
+import { Link, useParams } from "react-router-dom";
 import { SignIn } from "phosphor-react";
 import { UserContext } from "../../context/UserContext";
 
 
 
-export const SignUp = () => {
-    const {register, handleSubmit} = useForm();
-    const {errorMessage, createUser} = useContext(UserContext)
-    const navigate = useNavigate();
+export const Update = () => {
+    const {register, handleSubmit, setValue} = useForm();
+    const {errorMessage, updateUser, userData, load} = useContext(UserContext)
+    const { userId } = useParams();
+    const emailsToUpdate = [];
+    const phonesToUpdate = [];
+
+    useEffect(() => {
+        load(userId);
+
+    }, [])
+    setTimeout(() => {
+        userData.userEmails.map((item) => emailsToUpdate.push(item.email));
+        userData.userPhones.map((item) => phonesToUpdate.push(item.phone));
+        setValue("name", userData.name);
+        setValue("username", userData.userName);
+        setValue("emails", emailsToUpdate.join(", "));
+        setValue("phones", phonesToUpdate.join(", "))
+    }, 1000)
 
     const onsubmit = async (data) => {
         data.emails = data.emails.split(",");
         data.phones = data.phones.split(",");
-        createUser(data, navigate);
+        updateUser(data, userId);
     }
 
     return(
         <MainContainer>
             <NavContainer>
-                <Link to={"/"}>
+                <Link to={`/user/${userId}`}>
                     <SignIn size={32}/>
-                    <p>Login</p>
+                    <p>Voltar</p>
                 </Link>
             </NavContainer>
             <ContentContainer>
                 <SignUpContainer>
-                    <h2>Cadastro de usuário</h2>
+                    <h2>Atualizar dados</h2>
                     <FormContainer>
                         <FormGroup>
                             <label htmlFor="name">Nome</label>
@@ -50,7 +65,7 @@ export const SignUp = () => {
                     </FormContainer>
 
                     <DefaultButton onClick={() => handleSubmit(onsubmit)()} type="submit">
-                        Cadastrar
+                        Atualizar
                     </DefaultButton>
                     <SpanError className={errorMessage === "" ? "" : "active"}>
                         {errorMessage}

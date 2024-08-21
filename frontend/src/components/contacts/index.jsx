@@ -3,11 +3,13 @@ import { useContext } from "react";
 import { ActionsContactContainer, ContactContainer, ItemContactContainer } from "./styles";
 import { UserContext } from "../../context/UserContext";
 import { useParams } from "react-router-dom";
+import * as Dialog from "@radix-ui/react-dialog"
+import { UpdateContactModal } from "../UpdateContactModal";
 
 
 export const Contact = ({contact}) => {
     const{ userId } = useParams()
-    const {deleteContact} = useContext(UserContext);
+    const {deleteContact, openUpdateModal, setOpenUpdateModal} = useContext(UserContext);
     console.log(contact);
     return(
         <ContactContainer>
@@ -43,10 +45,15 @@ export const Contact = ({contact}) => {
                 )
             })}
             </ItemContactContainer>
-            <ActionsContactContainer>
-                <button>
-                        <span>Atualizar</span>
-                </button>
+            <ActionsContactContainer className={userId ? "active" : "inactive"}>
+                <Dialog.Root open={openUpdateModal} onOpenChange={setOpenUpdateModal}>
+                    <Dialog.Trigger asChild>
+                        <button>
+                            <span>Atualizar</span>
+                        </button>
+                    </Dialog.Trigger>
+                    <UpdateContactModal contact={contact}/>
+                </Dialog.Root>
                 <button className="delete" onClick={() => deleteContact(userId, contact.id)}>
                     <span>Excluir</span>
                 </button>

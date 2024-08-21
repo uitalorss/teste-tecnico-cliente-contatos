@@ -9,6 +9,7 @@ export const UserContextProvider = ({children}) => {
     const [isLoading, setIsLoading] = useState(true);
     const [errorMessage, setErrorMessage] = useState("");
     const [open, setOpen] = useState(false);
+    const [openUpdateModal, setOpenUpdateModal] = useState(false)
 
     const baseURL = "http://localhost:3000"
     const axiosConfig = {
@@ -28,7 +29,7 @@ export const UserContextProvider = ({children}) => {
         }
     }
 
-    async function createUser(data){
+    async function createUser(data, navigate){
         try{
             await axios.post("http://localhost:3000/user",
             data,
@@ -36,7 +37,19 @@ export const UserContextProvider = ({children}) => {
             );
             setErrorMessage("");
             alert("Usuário cadastrado com sucesso.");
+            navigate("/")
         }catch(error){
+            setErrorMessage(error.response.data.errors[0].message)
+            console.log(error.response.data.errors[0].message)
+        }
+    }
+
+    async function updateUser(data, userId){
+        try {
+            await axios.put(`${baseURL}/user/${userId}`, data, axiosConfig);
+            setErrorMessage("");
+            alert("Usuário atualizado com sucesso.")
+        } catch (error) {
             setErrorMessage(error.response.data.errors[0].message)
             console.log(error.response.data.errors[0].message)
         }
@@ -69,6 +82,18 @@ export const UserContextProvider = ({children}) => {
         }
     }
 
+    async function updateContact(data, userId, contactId) {
+        try {
+            await axios.put(`${baseURL}/user/${userId}/contact/${contactId}`,data,axiosConfig);
+            alert("Contato atualizado com sucesso.");
+            load(userId);
+            setOpenUpdateModal(false);
+        } catch (error) {
+            console.log(error.response)
+            setErrorMessage(error.response)
+        }
+    }
+
     async function deleteContact(userId, contactId){
         try {
             await axios.delete(`http://localhost:3000/user/${userId}/contact/${contactId}`)
@@ -77,8 +102,6 @@ export const UserContextProvider = ({children}) => {
             alert(error.message)
         }
     }
-
-
 
     return(
         <UserContext.Provider value={{
@@ -91,7 +114,11 @@ export const UserContextProvider = ({children}) => {
             open,
             setOpen,
             deleteUser,
-            createUser
+            createUser,
+            updateUser,
+            openUpdateModal,
+            setOpenUpdateModal,
+            updateContact
             }}>
             {children}
         </UserContext.Provider>

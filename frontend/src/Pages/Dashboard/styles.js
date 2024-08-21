@@ -47,5 +47,9 @@ export const ButtonContainer = styled.div`
         &.delete{
             background: #c23616;
         }
+        a{
+            color: #dcdde1;
+            text-decoration: none;
+        }
     }
 `

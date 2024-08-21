@@ -3,6 +3,7 @@ import { Login } from "../Pages/Login"
 import { SignUp } from "../Pages/SignUp"
 import { Admin } from "../Pages/admin"
 import { Dashboard } from "../Pages/Dashboard"
+import { Update } from "../Pages/update"
 
 
 export const AppRoutes = () => {
@@ -22,6 +23,10 @@ export const AppRoutes = () => {
         {
             path: "/user/:userId",
             element: <Dashboard />
+        },
+        {
+            path: "/user/:userId/update",
+            element: <Update />
         }
     ]
 

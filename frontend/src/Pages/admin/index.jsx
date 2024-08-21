@@ -2,9 +2,12 @@ import axios from "axios"
 import { useEffect, useState } from "react"
 import { User } from "../../components/User"
 import { AdminContainer, InfoUserContainer } from "./styles"
+import { useParams } from "react-router-dom"
 
 export const Admin = () => {
     const [listUsers, setListUsers] = useState([])
+    const {userId} = useParams();
+    console.log(userId ? userId : "Não tem usuário.")
 
     useEffect(() => {
         async function load() {
