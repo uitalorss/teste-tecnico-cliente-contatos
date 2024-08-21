@@ -1,23 +1,22 @@
 import styled from "styled-components";
 
-export const ContentContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-`
-
 export const NavContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: end;
   gap: .25rem;
-  padding: 2rem 3rem 0 3rem;
+  padding: 2rem 3rem;
   a{
     color: #dcdde1;
     text-decoration: none;
   }
+`
+
+export const ContentContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 `
 
 export const SignUpContainer = styled.div`
@@ -26,7 +25,6 @@ export const SignUpContainer = styled.div`
     justify-content: center;
     gap: 2rem;
     width: 40rem;
-    height: 20rem;
     padding: 1rem 2rem;
     color: #dcdde1;
     input{

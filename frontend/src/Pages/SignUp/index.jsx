@@ -1,41 +1,23 @@
 import { useForm } from "react-hook-form"
 import { DefaultButton, MainContainer, SpanError } from "../../global"
 import { ContentContainer, FormContainer, FormGroup, NavContainer, SignUpContainer } from "./styles"
-import axios from "axios";
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { Link } from "react-router-dom";
 import { SignIn } from "phosphor-react";
+import { UserContext } from "../../context/UserContext";
 
 
 
 export const SignUp = () => {
     const {register, handleSubmit} = useForm();
-    const [errorMessage, setErrorMessage] = useState("");
-    const navigate = useNavigate()
+    const {errorMessage, createUser} = useContext(UserContext)
 
     const onsubmit = async (data) => {
         data.emails = data.emails.split(",");
         data.phones = data.phones.split(",");
-        console.log(data)
-
-        const axiosConfig = {
-            headers: {
-                "Content-Type": "application/json",
-            },
-        };
-        try{
-            await axios.post("http://localhost:3000/user",
-            data,
-            axiosConfig
-            );
-            setErrorMessage("");
-            alert("Usuário cadastrado com sucesso.");
-            navigate("/");
-        }catch(error){
-            setErrorMessage(error.response.data.message)
-            console.log(error.response.data.message)
-        }
+        createUser(data);
     }
+
     return(
         <MainContainer>
             <NavContainer>

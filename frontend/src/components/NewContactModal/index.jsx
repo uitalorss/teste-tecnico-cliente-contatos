@@ -9,7 +9,7 @@ import { UserContext } from "../../context/UserContext";
 
 export const NewContactModal = ({userId}) => {
     const { register, handleSubmit } = useForm();
-    const {createContact, createContactErrorMessage} = useContext(UserContext) 
+    const {createContact, errorMessage} = useContext(UserContext) 
     
     const onsubmit = async (data) => {
         data.emails = data.emails.split(",");
@@ -28,8 +28,8 @@ export const NewContactModal = ({userId}) => {
                     <DefaultButton onClick={() => handleSubmit(onsubmit)()}>
                         Adicionar
                     </DefaultButton>
-                    <SpanError className={createContactErrorMessage === "" ? "" : "active"}>
-                        {createContactErrorMessage}
+                    <SpanError className={errorMessage === "" ? "" : "active"}>
+                        {errorMessage}
                     </SpanError>
                 </div> 
             </Content>

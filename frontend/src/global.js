@@ -52,7 +52,6 @@ export const MainContainer = styled.div`
   display: flex;
   flex-direction: column;
   color: #dcdde1;
-  height: 100%;
 `
 
 export const SpanError = styled.span`

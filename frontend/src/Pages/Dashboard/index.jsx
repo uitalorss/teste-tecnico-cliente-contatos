@@ -11,7 +11,7 @@ import { UserContext } from "../../context/UserContext"
 
 export const Dashboard = () => {
     const { userId } = useParams();
-    const { userData, isLoading, load, open, setOpen } = useContext(UserContext);
+    const { userData, isLoading, load, open, setOpen, deleteUser } = useContext(UserContext);
 
     useEffect(() => {
         load(userId);
@@ -45,7 +45,7 @@ export const Dashboard = () => {
                 )}
                 <ButtonContainer>
                     <DefaultButton>Alterar dados</DefaultButton>
-                    <DefaultButton className="delete">Excluir conta</DefaultButton>
+                    <DefaultButton className="delete" onClick={() => deleteUser(userId)}>Excluir conta</DefaultButton>
                 </ButtonContainer>
             </UserDataContainer>
         </MainContainer>

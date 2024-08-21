@@ -7,14 +7,20 @@ export const UserContext = createContext();
 export const UserContextProvider = ({children}) => {
     const [userData, setUserData] = useState({});
     const [isLoading, setIsLoading] = useState(true);
-    const [createContactErrorMessage, setCreateContactErrorMessage] = useState("");
+    const [errorMessage, setErrorMessage] = useState("");
     const [open, setOpen] = useState(false);
 
+    const baseURL = "http://localhost:3000"
+    const axiosConfig = {
+        headers: {
+            "Content-Type": "application/json",
+        },
+    };
 
     async function load(userId) {
         try {
             setIsLoading(true)
-            const user = await axios.get(`http://localhost:3000/user/${userId}`)
+            const user = await axios.get(`${baseURL}/user/${userId}`)
             setUserData(user.data);
             setIsLoading(false)
         } catch (error) {
@@ -22,32 +28,50 @@ export const UserContextProvider = ({children}) => {
         }
     }
 
-    async function createContact(data, userId) {
-        const axiosConfig = {
-            headers: {
-                "Content-Type": "application/json"
-            },
-        };
+    async function createUser(data){
+        try{
+            await axios.post("http://localhost:3000/user",
+            data,
+            axiosConfig
+            );
+            setErrorMessage("");
+            alert("Usuário cadastrado com sucesso.");
+        }catch(error){
+            setErrorMessage(error.response.data.errors[0].message)
+            console.log(error.response.data.errors[0].message)
+        }
+    }
+
+    async function deleteUser(userId) {
         try {
-            await axios.post(`http://localhost:3000/user/${userId}/contact`,
+            alert("Tem certeza que deseja excluir conta?")
+            await axios.delete(`${baseURL}/user/${userId}`)
+            alert("Usuário excluído com sucesso.");
+            load(userId)
+        } catch (error) {
+            alert(error.message)
+        }
+    }
+
+    async function createContact(data, userId) {
+        try {
+            await axios.post(`${baseURL}/user/${userId}/contact`,
             data,
             axiosConfig,
             );
-            setCreateContactErrorMessage("");
+            setErrorMessage("");
             alert("Contato adicionado com sucesso.");
             setOpen(false);
             load(userId);
         } catch (error) {
             console.log(error.response)
-            setCreateContactErrorMessage(error.response.data.errors[0].message)
+            setErrorMessage(error.response.data.errors[0].message)
         }
     }
 
     async function deleteContact(userId, contactId){
-        const link = `http://localhost:3000/user/${userId}/contact/${contactId}`
-        console.log(link)
         try {
-            await axios.delete(link)
+            await axios.delete(`http://localhost:3000/user/${userId}/contact/${contactId}`)
             load(userId);
         } catch (error) {
             alert(error.message)
@@ -63,9 +87,11 @@ export const UserContextProvider = ({children}) => {
             deleteContact,
             load,
             createContact,
-            createContactErrorMessage,
+            errorMessage,
             open,
             setOpen,
+            deleteUser,
+            createUser
             }}>
             {children}
         </UserContext.Provider>
