@@ -10,6 +10,10 @@ export const NavContainer = styled.div`
     color: #dcdde1;
     text-decoration: none;
   }
+  @media only screen and (max-width: 575px) {
+    padding: 1rem;
+    width: 100%;
+  }
 `
 
 export const ContentContainer = styled.div`
@@ -17,6 +21,9 @@ export const ContentContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  @media only screen and (max-width: 575px) {
+    width: 100%;
+  }
 `
 
 export const SignUpContainer = styled.div`
@@ -34,6 +41,17 @@ export const SignUpContainer = styled.div`
     }
     button{
         width: 100%;
+    }
+
+    @media only screen and (max-width: 575px) {
+      padding: 0 2rem;
+      width: 100%;
+      input{
+        width: 100%;
+      }
+      h2{
+        text-align: center;
+      }
     }
 `
 export const FormContainer = styled.div`

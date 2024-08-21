@@ -3,7 +3,7 @@ import * as Dialog from "@radix-ui/react-dialog"
 import { Content, Overlay } from "./styles"
 import { useForm } from "react-hook-form";
 import { DefaultButton, SpanError } from "../../global";
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { UserContext } from "../../context/UserContext";
 import { useParams } from "react-router-dom";
 

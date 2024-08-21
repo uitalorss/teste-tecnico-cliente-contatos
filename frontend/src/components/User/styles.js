@@ -24,5 +24,11 @@ export const ItemUserContainer = styled.table`
         margin-top: 1rem;
         }
     }
-
+    @media only screen and (max-width: 991px) {
+        tr{
+            th{
+                width: 40%;
+            }
+        }
+    }
 `

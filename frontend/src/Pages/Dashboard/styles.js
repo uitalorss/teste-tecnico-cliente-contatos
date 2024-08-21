@@ -10,11 +10,29 @@ export const DashboardHeaderContainer = styled.div`
         color: #dcdde1;
         text-decoration: none;    
     }
-
+    @media only screen and (max-width: 575px) {
+        gap: 0 1rem;
+    }
 `
 export const UserDataContainer = styled.div`
     width: 50%;
+    @media only screen and (min-width: 992px) and (max-width: 1199px) {
+        width: 70%;
+    }
 
+    @media only screen and (min-width: 768px) and (max-width: 991px) {
+        margin: 0 auto;
+        width: 80%;
+    }
+
+    @media only screen and (min-width: 576px) and (max-width: 767px) {
+        margin: 0 auto;
+        width: 90%;
+    }
+
+    @media only screen and (max-width: 575px) {
+        width: 100%;
+    }
 `
 
 export const HeaderUserDataContainer = styled.div`
@@ -50,6 +68,21 @@ export const ButtonContainer = styled.div`
         a{
             color: #dcdde1;
             text-decoration: none;
+        }
+    }
+
+    @media (min-width: 576px) and (max-width: 767px) {
+        button{
+            width: 12rem;
+        }
+    }
+
+    @media only screen and (max-width: 575px) {
+        button{
+            width: 35%;
+            font-size: 1rem;
+            font-weight: 600;
+            padding: 1rem;
         }
     }
 `

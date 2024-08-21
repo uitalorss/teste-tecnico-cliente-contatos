@@ -44,5 +44,9 @@ export const Content = styled(Dialog.Content)`
       justify-content: center;
     }
   }
+  @media only screen and (max-width: 575px) {
+      min-width: 24rem;
+      padding: 1.5rem 2rem;
+    }
 `;
 

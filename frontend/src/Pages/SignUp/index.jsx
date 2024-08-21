@@ -55,7 +55,6 @@ export const SignUp = () => {
                     <SpanError className={errorMessage === "" ? "" : "active"}>
                         {errorMessage}
                     </SpanError>
-                    
                 </SignUpContainer>
             </ContentContainer>
         </MainContainer>
