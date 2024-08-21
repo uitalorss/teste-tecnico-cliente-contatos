@@ -29,6 +29,7 @@ export const NewContactModal = ({userId}) => {
             alert("Contato adicionado com sucesso.");
         } catch (error) {
             console.log(error.response)
+            setErrorMessage(error.response.data.errors[0].message)
         }
     }
     return(

@@ -5,13 +5,11 @@ export const UserContainer = styled.div`
     flex-direction: column;
     gap: 1rem;
     margin: 0 1rem;
-    background: #222f3e;
     padding: 1rem;
-    border-radius: 8px;
 `
 
 export const ItemUserContainer = styled.table`
-    background: #353b48;
+    background: #262626;
     border-radius: 8px;
     padding: .75rem;
     tr {

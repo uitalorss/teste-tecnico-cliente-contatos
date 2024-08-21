@@ -1,4 +1,5 @@
-import { ContactContainer, ItemContactContainer } from "./styles";
+import { DefaultButton } from "../../global";
+import { ActionsContactContainer, ContactContainer, ItemContactContainer } from "./styles";
 
 
 export const Contact = ({contact}) => {
@@ -37,6 +38,14 @@ export const Contact = ({contact}) => {
                 )
             })}
             </ItemContactContainer>
+            <ActionsContactContainer>
+                <button>
+                        <span>Atualizar</span>
+                </button>
+                <button className="delete">
+                    <span>Excluir</span>
+                </button>
+            </ActionsContactContainer>
         </ContactContainer>
     );
 }

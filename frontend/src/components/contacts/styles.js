@@ -5,7 +5,7 @@ export const ContactContainer = styled.div`
     flex-direction: column;
     gap: 1rem;
     margin: 0 1rem;
-    background: #222f3e;
+    background: #1a1a1a;
     padding: 1rem;
     border-radius: 8px;
 `
@@ -31,4 +31,26 @@ export const Example = styled.table`
         }
     }
 
+`
+
+export const ActionsContactContainer = styled.div`
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+    
+    button {
+    display: flex;
+    align-items: center;
+    gap: .25rem;
+    border: none;
+    padding: 0.5rem 0.75rem;
+    border-radius: 4px;
+    background: #10ac84;
+    color: #dcdde1;
+    font-weight: bold;
+    cursor: pointer;
+    &.delete{
+        background: #c23616
+    }
+}
 `
