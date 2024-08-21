@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable, NotFoundException } from "@nestjs/common";
+import { BadRequestException, forwardRef, Inject, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { User } from "./entities/user.entity";
@@ -7,6 +7,7 @@ import { UserPhone } from "./entities/phone-user.entity";
 import { ResponseUserDTO } from "./dto/response-user.dto";
 import { CreateUserDTO } from "./dto/create-user.dto";
 import { UpdateUserDTO } from "./dto/update-user.dto";
+import { ContactService } from "src/contact/contact.service";
 
 @Injectable()
 export class UserService {
@@ -19,6 +20,9 @@ export class UserService {
 
     @InjectRepository(UserPhone)
     private userPhoneRepository: Repository<UserPhone>,
+
+    @Inject(forwardRef(() => ContactService))
+    private contactService: ContactService,
   ) {}
 
   public async findAll(): Promise<ResponseUserDTO[]> {
@@ -29,6 +33,12 @@ export class UserService {
         contacts: true,
       },
     });
+    await Promise.all(
+      users.map(async user => {
+        return (user.contacts = await this.contactService.find(user));
+      }),
+    );
+
     return users;
   }
 
@@ -46,7 +56,7 @@ export class UserService {
     if (!user) {
       throw new NotFoundException("Usuário não encontrado.");
     }
-
+    user.contacts = await this.contactService.find(user);
     return user;
   }
 

@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable, NotFoundException } from "@nestjs/common";
+import { BadRequestException, forwardRef, Inject, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Contact } from "./entities/contact.entity";
 import { Repository } from "typeorm";
@@ -8,6 +8,7 @@ import { UserService } from "src/user/user.service";
 import { CreateContactDTO } from "./dto/create-contact.dto";
 import { DeleteContactDTO } from "./dto/delete-contact.dto";
 import { UpdateContactDTO } from "./dto/update-contact.dto";
+import { User } from "src/user/entities/user.entity";
 
 @Injectable()
 export class ContactService {
@@ -21,12 +22,12 @@ export class ContactService {
     @InjectRepository(ContactPhone)
     private contactPhoneRepository: Repository<ContactPhone>,
 
+    @Inject(forwardRef(() => UserService))
     private readonly userService: UserService,
   ) {}
 
   public async create({ user_id, name, emails, phones }: CreateContactDTO) {
     const user = await this.userService.findUser(user_id);
-
     const contact = this.contactRepository.create({
       name,
       user,
@@ -34,21 +35,15 @@ export class ContactService {
 
     await this.contactRepository.save(contact);
 
-    await Promise.all(emails.map(item => this.createContactEmails(item, contact)));
-    await Promise.all(phones.map(item => this.createContactPhones(item, contact)));
-
-    return contact;
+    if (contact) {
+      await Promise.all(emails.map(item => this.createContactEmails(item, contact)));
+      await Promise.all(phones.map(item => this.createContactPhones(item, contact)));
+    }
+    await this.contactRepository.save(contact);
   }
 
-  public async find(user_id: string) {
-    const user = await this.userService.findUser(user_id);
-    const queryBuilder = this.contactRepository
-      .createQueryBuilder("contacts")
-      .leftJoinAndSelect("contacts.contactEmails", "contactEmails")
-      .leftJoinAndSelect("contacts.contactPhones", "contactPhones")
-      .where("user_id = :id", { id: user.id });
-    const contacts = await queryBuilder.getMany();
-    return contacts;
+  public async find(user: User) {
+    return await this.loadContacts(user);
   }
 
   public async update({ user_id, contact_id, name, emails, phones }: UpdateContactDTO) {
@@ -103,6 +98,16 @@ export class ContactService {
       throw new BadRequestException("Contato não atribuído a sua conta.");
     }
     await this.contactRepository.remove(contact);
+  }
+
+  private async loadContacts(user: User) {
+    const queryBuilder = this.contactRepository
+      .createQueryBuilder("contacts")
+      .leftJoinAndSelect("contacts.contactEmails", "contactEmails")
+      .leftJoinAndSelect("contacts.contactPhones", "contactPhones")
+      .where("user_id = :id", { id: user.id });
+    const contacts = await queryBuilder.getMany();
+    return contacts;
   }
 
   private async createContactEmails(email: string, contact: Contact) {
