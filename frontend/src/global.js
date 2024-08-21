@@ -54,3 +54,17 @@ export const MainContainer = styled.div`
   color: #dcdde1;
   height: 100%;
 `
+
+export const SpanError = styled.span`
+  &.active {
+    width: 100%;
+    padding: 1rem;
+    background: #f1c40f20;
+    color: #f39c12;
+    border-radius: 10px;
+    text-align: center;
+    @media (max-width: 820px) {
+      width: 100%;
+    }
+  }
+`;

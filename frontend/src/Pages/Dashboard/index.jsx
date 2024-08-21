@@ -53,7 +53,7 @@ export const Dashboard = () => {
                                 <span>Contato</span>
                             </button>
                         </Dialog.Trigger>
-                        <NewContactModal />
+                        <NewContactModal userId={userData.id}/>
                     </Dialog.Root>
                 </HeaderUserDataContainer>
                 {finishedTimeOut && <User user={userData}/>}

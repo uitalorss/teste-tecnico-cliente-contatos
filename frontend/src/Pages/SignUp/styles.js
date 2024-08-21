@@ -61,16 +61,3 @@ export const FormGroup = styled.div`
   }
 `;
 
-export const SpanError = styled.span`
-  &.active {
-    width: 100%;
-    padding: 1rem;
-    background: #f1c40f20;
-    color: #f39c12;
-    border-radius: 10px;
-    text-align: center;
-    @media (max-width: 820px) {
-      width: 100%;
-    }
-  }
-`;
