@@ -5,6 +5,7 @@ import { useContext } from "react";
 
 export const ProtectedRouteDashboard = () => {
   const { authenticated } = useContext(AuthContext);
+  console.log(authenticated)
 
   if (!authenticated) {
     return <Navigate to="/" />;

@@ -1,0 +1,49 @@
+
+services:
+  api:
+    build: ./backend
+    entrypoint: .docker/entrypoint.sh
+    container_name: clients_api
+    ports:
+      - 3000:3000
+    volumes:
+      - ./backend:/home/app
+    depends_on:
+      - db
+
+  db:
+    image: postgres
+    container_name: clients_db
+    restart: always
+    tty: true
+    ports:
+      - 5430:5432
+    volumes:
+      - dbdata:/var/lib/postgresql/dbdata
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=clientsandcontacts
+  
+  site:
+    container_name: clients_site
+    build: ./frontend
+    depends_on:
+      - api
+    volumes:
+      - clients-volume:/var/www/html
+  
+  nginx:
+    container_name: clients-nginx
+    build: ./nginx
+    ports:
+      - 80:80
+    volumes:
+      - clients-volume:/var/www/html
+    depends_on:
+      - db
+      - api
+      - site
+  
+volumes:
+  clients-volume:
+  dbdata:
