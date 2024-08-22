@@ -27,6 +27,7 @@ export const Login = () => {
                     {errorLoginMessage}
                 </SpanError>
                 <p>Faça o seu cadastro <Link to="/signup">aqui</Link></p>
+                <Link to={"/admin"}>Área restrita</Link>
             </LoginContainer>
         </MainContainer>
        

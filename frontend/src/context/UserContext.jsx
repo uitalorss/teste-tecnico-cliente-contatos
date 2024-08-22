@@ -7,6 +7,7 @@ export const UserContext = createContext();
 
 export const UserContextProvider = ({children}) => {
     const [userData, setUserData] = useState({});
+    const [allUsers, setAllUsers] = useState([])
     const [isLoading, setIsLoading] = useState(true);
     const [errorMessage, setErrorMessage] = useState("");
     const [open, setOpen] = useState(false);
@@ -31,6 +32,14 @@ export const UserContextProvider = ({children}) => {
             setAuthenticated(false)
             console.log(error.response)
         }
+    }
+
+    async function loadAdminData() {
+        setAuthenticated(false)
+        setIsLoading(true)
+        const users = await axios.get(`${baseURL}/admin`)
+        setAllUsers(users.data);
+        setIsLoading(false)
     }
 
     async function createUser(data, navigate){
@@ -148,7 +157,9 @@ export const UserContextProvider = ({children}) => {
             updateUser,
             openUpdateModal,
             setOpenUpdateModal,
-            updateContact
+            updateContact,
+            loadAdminData,
+            allUsers,
             }}>
             {children}
         </UserContext.Provider>
