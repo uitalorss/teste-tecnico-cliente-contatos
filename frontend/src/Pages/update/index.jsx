@@ -37,7 +37,7 @@ export const Update = () => {
     return(
         <MainContainer>
             <NavContainer>
-                <Link to={`/user/${userId}`}>
+                <Link to={`/user`}>
                     <SignIn size={32}/>
                     <p>Voltar</p>
                 </Link>

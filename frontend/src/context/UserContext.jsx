@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import axios from "axios";
-import { createContext, useState } from "react";
+import { createContext, useContext, useState } from "react";
+import { AuthContext } from "./AuthContext";
 
 export const UserContext = createContext();
 
@@ -10,6 +11,7 @@ export const UserContextProvider = ({children}) => {
     const [errorMessage, setErrorMessage] = useState("");
     const [open, setOpen] = useState(false);
     const [openUpdateModal, setOpenUpdateModal] = useState(false)
+    const {token, setToken, setAuthenticated} = useContext(AuthContext);
 
     const baseURL = "http://localhost:3000"
     const axiosConfig = {
@@ -18,13 +20,15 @@ export const UserContextProvider = ({children}) => {
         },
     };
 
-    async function load(userId) {
+    async function load() {
         try {
             setIsLoading(true)
-            const user = await axios.get(`${baseURL}/user/${userId}`)
+            axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+            const user = await axios.get(`${baseURL}/user`)
             setUserData(user.data);
             setIsLoading(false)
         } catch (error) {
+            setAuthenticated(false)
             console.log(error.response)
         }
     }
@@ -39,65 +43,91 @@ export const UserContextProvider = ({children}) => {
             alert("Usuário cadastrado com sucesso.");
             navigate("/")
         }catch(error){
-            setErrorMessage(error.response.data.errors[0].message)
-            console.log(error.response.data.errors[0].message)
+            if(error.response.data.message === "Validation failed"){
+                console.log(error.response.data.errors[0].message)
+                setErrorMessage(error.response.data.errors[0].message)
+            }else{
+                console.log(error.response.data.message)
+                setErrorMessage(error.response.data.message)
+            }
         }
     }
 
-    async function updateUser(data, userId){
+    async function updateUser(data){
         try {
-            await axios.put(`${baseURL}/user/${userId}`, data, axiosConfig);
+            axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+            await axios.put(`${baseURL}/user`, data, axiosConfig);
             setErrorMessage("");
-            alert("Usuário atualizado com sucesso.")
+            alert("Usuário atualizado com sucesso.");
         } catch (error) {
-            setErrorMessage(error.response.data.errors[0].message)
-            console.log(error.response.data.errors[0].message)
+            if(error.response.data.message === "Validation failed"){
+                console.log(error.response.data.errors[0].message)
+                setErrorMessage(error.response.data.errors[0].message)
+            }else{
+                console.log(error.response.data.message)
+                setErrorMessage(error.response.data.message)
+            }
         }
     }
 
-    async function deleteUser(userId) {
+    async function deleteUser() {
         try {
             alert("Tem certeza que deseja excluir conta?")
-            await axios.delete(`${baseURL}/user/${userId}`)
+            axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+            await axios.delete(`${baseURL}/user`)
             alert("Usuário excluído com sucesso.");
-            load(userId)
+            setToken("");
+            setAuthenticated(false)
         } catch (error) {
             alert(error.message)
         }
     }
 
-    async function createContact(data, userId) {
+    async function createContact(data) {
         try {
-            await axios.post(`${baseURL}/user/${userId}/contact`,
+            axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+            await axios.post(`${baseURL}/user/contact`,
             data,
             axiosConfig,
             );
             setErrorMessage("");
             alert("Contato adicionado com sucesso.");
             setOpen(false);
-            load(userId);
+            load();
         } catch (error) {
-            console.log(error.response)
-            setErrorMessage(error.response.data.errors[0].message)
+            if(error.response.data.message === "Validation failed"){
+                console.log(error.response.data.errors[0].message)
+                setErrorMessage(error.response.data.errors[0].message)
+            }else{
+                console.log(error.response.data.message)
+                setErrorMessage(error.response.data.message)
+            }
         }
     }
 
-    async function updateContact(data, userId, contactId) {
+    async function updateContact(data, contactId) {
         try {
-            await axios.put(`${baseURL}/user/${userId}/contact/${contactId}`,data,axiosConfig);
+            axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+            await axios.put(`${baseURL}/user/contact/${contactId}`,data,axiosConfig);
             alert("Contato atualizado com sucesso.");
-            load(userId);
+            load();
             setOpenUpdateModal(false);
         } catch (error) {
-            console.log(error.response)
-            setErrorMessage(error.response)
+            if(error.response.data.message === "Validation failed"){
+                console.log(error.response.data.errors[0].message)
+                setErrorMessage(error.response.data.errors[0].message)
+            }else{
+                console.log(error.response.data.message)
+                setErrorMessage(error.response.data.message)
+            }
         }
     }
 
-    async function deleteContact(userId, contactId){
+    async function deleteContact(contactId){
         try {
-            await axios.delete(`http://localhost:3000/user/${userId}/contact/${contactId}`)
-            load(userId);
+            axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+            await axios.delete(`http://localhost:3000/user/contact/${contactId}`)
+            load();
         } catch (error) {
             alert(error.message)
         }

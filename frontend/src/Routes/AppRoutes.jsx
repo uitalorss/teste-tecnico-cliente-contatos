@@ -2,12 +2,12 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom"
 import { Login } from "../Pages/Login"
 import { SignUp } from "../Pages/SignUp"
 import { Admin } from "../Pages/admin"
-import { Dashboard } from "../Pages/Dashboard"
-import { Update } from "../Pages/update"
+import { ProtectedRouteDashboard } from "./ProtectedRouteDashboard"
+import { ProtectedRouteUpdate } from "./ProtectedRouteUpdate"
 
 
 export const AppRoutes = () => {
-    const routes = [
+    const routesForPublic = [
         {
             path: "/",
             element: <Login />
@@ -20,18 +20,22 @@ export const AppRoutes = () => {
             path: "/admin",
             element: <Admin />
         },
+    ]
+
+    const routesForAuthenticated = [
         {
-            path: "/user/:userId",
-            element: <Dashboard />
+            path: "/user",
+            element: <ProtectedRouteDashboard />
         },
         {
-            path: "/user/:userId/update",
-            element: <Update />
+            path: "/user/update",
+            element: <ProtectedRouteUpdate />
         }
     ]
 
     const router = createBrowserRouter([
-        ...routes
+        ...routesForPublic,
+        ...routesForAuthenticated
     ])
 
     return <RouterProvider router={router} />

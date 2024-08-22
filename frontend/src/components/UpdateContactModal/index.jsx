@@ -5,11 +5,9 @@ import { useForm } from "react-hook-form";
 import { DefaultButton, SpanError } from "../../global";
 import { useContext } from "react";
 import { UserContext } from "../../context/UserContext";
-import { useParams } from "react-router-dom";
 
 
 export const UpdateContactModal = ({contact}) => {
-    const {userId} = useParams();
     const { register, handleSubmit, setValue } = useForm();
     const {updateContact, errorMessage} = useContext(UserContext);
     console.log(contact)
@@ -23,7 +21,7 @@ export const UpdateContactModal = ({contact}) => {
     const onsubmit = async (data) => {
         data.emails = data.emails.split(",");
         data.phones = data.phones.split(",");
-        updateContact(data, userId, contact.id);
+        updateContact(data, contact.id);
     }
 
     return(
