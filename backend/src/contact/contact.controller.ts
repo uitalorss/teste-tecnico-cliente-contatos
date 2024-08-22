@@ -22,14 +22,14 @@ export class ContactController {
     return res.json(instanceToInstance(contacts));
   }*/
 
-  @Delete(":user_id/:contact_id")
+  @Delete(":contact_id")
   @HttpCode(204)
   public async remove(@Res() res, @Param("user_id") user_id: string, @Param("contact_id") contact_id: string) {
     await this.contactService.remove({ contact_id, user_id });
     return res.send();
   }
 
-  @Put(":user_id/:contact_id")
+  @Put(":contact_id")
   @HttpCode(204)
   public async update(
     @Res() res,

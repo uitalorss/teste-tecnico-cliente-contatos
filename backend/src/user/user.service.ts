@@ -61,6 +61,13 @@ export class UserService {
   }
 
   public async create({ name, username, emails, phones }: CreateUserDTO): Promise<ResponseUserDTO> {
+    const isUsernameExists = await this.userRepository.findOneBy({
+      userName: username,
+    });
+    if (isUsernameExists) {
+      throw new BadRequestException("Nome de usuário já existe.");
+    }
+
     const user = this.userRepository.create({
       name,
       userName: username,

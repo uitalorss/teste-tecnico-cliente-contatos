@@ -32,14 +32,9 @@ export class ContactService {
       name,
       user,
     });
-
     await this.contactRepository.save(contact);
-
-    if (contact) {
-      await Promise.all(emails.map(item => this.createContactEmails(item, contact)));
-      await Promise.all(phones.map(item => this.createContactPhones(item, contact)));
-    }
-    await this.contactRepository.save(contact);
+    Promise.all(emails.map(item => this.createContactEmails(item, contact)));
+    Promise.all(phones.map(item => this.createContactPhones(item, contact)));
   }
 
   public async find(user: User) {
@@ -74,11 +69,11 @@ export class ContactService {
     await this.contactRepository.save(updateContact);
     if (emails) {
       await this.resetContactEmails(contactAlreadyExists);
-      await Promise.all(emails.map(item => this.createContactEmails(item, updateContact)));
+      Promise.all(emails.map(item => this.createContactEmails(item, updateContact)));
     }
     if (phones) {
       await this.resetContactPhones(contactAlreadyExists);
-      await Promise.all(phones.map(item => this.createContactPhones(item, updateContact)));
+      Promise.all(phones.map(item => this.createContactPhones(item, updateContact)));
     }
   }
 
