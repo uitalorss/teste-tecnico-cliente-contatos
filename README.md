@@ -94,7 +94,7 @@ Para inicializar o projeto, acesse as pastas **backend** e **frontend** e rode o
 
 <!---Se o seu README for longo ou se você tiver algum processo ou etapas específicas que deseja que os contribuidores sigam, considere a criação de um arquivo CONTRIBUTING.md separado--->
 
-Para contribuir com o Catálogo de filmes, siga estas etapas:
+Para contribuir com o projeto, siga estas etapas:
 
 1. Bifurque este repositório.
 2. Crie um branch: `git checkout -b <nome_branch>`.
