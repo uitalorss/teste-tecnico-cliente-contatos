@@ -1,16 +1,18 @@
 import { useContext, useEffect } from "react"
 import { DefaultButton, MainContainer } from "../../global"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { User } from "../../components/User"
 import { ButtonContainer, DashboardHeaderContainer, HeaderUserDataContainer, UserDataContainer } from "./styles"
 import { PlusCircle, SignOut } from "phosphor-react"
 import * as Dialog from "@radix-ui/react-dialog"
 import { NewContactModal } from "../../components/NewContactModal"
 import { UserContext } from "../../context/UserContext"
+import { AuthContext } from "../../context/AuthContext"
 
 
 export const Dashboard = () => {
     const { userData, isLoading, load, open, setOpen, deleteUser } = useContext(UserContext);
+    const {SignOutUser} = useContext(AuthContext)
 
     useEffect(() => {
         load();
@@ -19,7 +21,7 @@ export const Dashboard = () => {
         <MainContainer>
             <DashboardHeaderContainer>
                 <h2>Bem vindo, {userData.name}</h2>
-                <Link to={"/"}>
+                <Link onClick={() => SignOutUser()} to={"/"}>
                     <SignOut size={32}/>
                     <p>Sair</p>
                 </Link>

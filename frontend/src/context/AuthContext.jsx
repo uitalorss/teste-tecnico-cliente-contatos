@@ -8,7 +8,8 @@ export const AuthContext = createContext();
 export const AuthContextProvider = ({children}) => {
     const [token, setToken] = useState(localStorage.getItem("token"));
     const [authenticated, setAuthenticated] = useState(true);
-    const [errorLoginMessage, setErrorLoginMessage] = useState("")
+    const [errorLoginMessage, setErrorLoginMessage] = useState("");
+
     const baseURL = "http://localhost:3000"
     const axiosConfig = {
         headers: {
@@ -39,6 +40,12 @@ export const AuthContextProvider = ({children}) => {
         }
     }
 
+    async function SignOutUser() {
+        alert("Usuário desconectado");
+        setToken("");
+        setAuthenticated(false);
+    }
+
     return(
         <AuthContext.Provider value={{
             token,
@@ -46,7 +53,8 @@ export const AuthContextProvider = ({children}) => {
             authenticated,
             setAuthenticated,
             signIn,
-            errorLoginMessage
+            errorLoginMessage,
+            SignOutUser
         }}>
             {children}
         </AuthContext.Provider>
