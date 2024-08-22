@@ -60,6 +60,15 @@ export class UserService {
     return user;
   }
 
+  public async findUserByUserName(username) {
+    const user = await this.userRepository.findOne({
+      where: {
+        userName: username,
+      },
+    });
+    return user;
+  }
+
   public async create({ name, username, emails, phones }: CreateUserDTO): Promise<ResponseUserDTO> {
     const isUsernameExists = await this.userRepository.findOneBy({
       userName: username,
