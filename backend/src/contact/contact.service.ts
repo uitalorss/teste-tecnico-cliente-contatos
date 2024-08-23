@@ -41,6 +41,10 @@ export class ContactService {
     return await this.loadContacts(user);
   }
 
+  public async findById(userId: string) {
+    return await this.loadContactsById(userId);
+  }
+
   public async update({ user_id, contact_id, name, emails, phones }: UpdateContactDTO) {
     const contactAlreadyExists = await this.contactRepository.findOne({
       where: {
@@ -101,6 +105,16 @@ export class ContactService {
       .leftJoinAndSelect("contacts.contactEmails", "contactEmails")
       .leftJoinAndSelect("contacts.contactPhones", "contactPhones")
       .where("user_id = :id", { id: user.id });
+    const contacts = await queryBuilder.getMany();
+    return contacts;
+  }
+
+  private async loadContactsById(userId: string) {
+    const queryBuilder = this.contactRepository
+      .createQueryBuilder("contacts")
+      .leftJoinAndSelect("contacts.contactEmails", "contactEmails")
+      .leftJoinAndSelect("contacts.contactPhones", "contactPhones")
+      .where("user_id = :id", { id: userId });
     const contacts = await queryBuilder.getMany();
     return contacts;
   }

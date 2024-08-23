@@ -4,6 +4,7 @@ import { CreateContactRequestDTO, createContactSchema } from "./dto/create-conta
 import { ZodValidationPipe } from "nestjs-zod";
 import { partialContactSchema, updateContactRequestDTO } from "./dto/update-contact.dto";
 import { AuthGuard } from "src/auth/auth.guard";
+import { instanceToInstance } from "class-transformer";
 
 @Controller("user/contact")
 export class ContactController {
@@ -17,11 +18,12 @@ export class ContactController {
     return res.json({ message: "contato criado com sucesso." });
   }
 
-  /*@Get(":id")
-  public async find(@Res() res, @Param("id") id: string) {
-    const contacts = await this.contactService.find(id);
+  @UseGuards(AuthGuard)
+  @Get()
+  public async find(@Req() req, @Res() res) {
+    const contacts = await this.contactService.findById(req.user);
     return res.json(instanceToInstance(contacts));
-  }*/
+  }
 
   @UseGuards(AuthGuard)
   @Delete(":contact_id")
