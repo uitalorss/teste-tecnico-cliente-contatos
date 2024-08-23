@@ -32,7 +32,7 @@ export const AuthContextProvider = ({children}) => {
             const loginData = await axios.post(`${baseURL}/login`,data, axiosConfig);
             setToken(loginData.data.token);
             setAuthenticated(true)
-            navigate("../user", {replace: true})
+            navigate("/user")
         } catch (error) {
             if(error.response.status === 404){
                 setErrorLoginMessage(error.response.data.message)
