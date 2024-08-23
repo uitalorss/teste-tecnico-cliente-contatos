@@ -19,7 +19,7 @@ O projeto está em desenvolvimento e, apesar do teste não cobrir algumas das si
 - [x] Implementação do ecossistema da aplicação com Docker 
 - [ ] Implementação da cobertura de testes unitários.
 - [ ] Implementação dos testes de ponta-a-ponta.
-- [ ] Construção da documentação em Swagger
+- [ ] Construção da documentação das rotas da API com o Swagger
 
 ## 💻 Tecnologias utilizadas
 
