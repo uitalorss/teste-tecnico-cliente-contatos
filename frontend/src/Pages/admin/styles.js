@@ -6,8 +6,13 @@ export const AdminContainer = styled.div`
     color: #dcdde1;
     div.admin-nav{
         display: flex;
-        justify-content: center;
+        justify-content: space-between;
+        align-items: center;
         padding: 2rem 3rem;
+        a{
+            color: #dcdde1;
+            text-decoration: none;
+        }
     }
     @media only screen and (max-width: 767px) {
         div.admin-nav{

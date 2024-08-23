@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form"
 import { DefaultButton, MainContainer, SpanError } from "../../global"
 import { ContentContainer, FormContainer, FormGroup, NavContainer, SignUpContainer } from "./styles"
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { SignIn } from "phosphor-react";
 import { UserContext } from "../../context/UserContext";
@@ -9,8 +9,10 @@ import { UserContext } from "../../context/UserContext";
 
 
 export const Update = () => {
+    const [isEmailFocused, setIsEmailFocused] = useState(false);
+    const [isPhoneFocused, setIsPhoneFocused] = useState(false);
     const {register, handleSubmit, setValue} = useForm();
-    const {errorMessage, updateUser, userData, load} = useContext(UserContext)
+    const {errorMessage, updateUser, userData, load} = useContext(UserContext);
     const { userId } = useParams();
     const emailsToUpdate = [];
     const phonesToUpdate = [];
@@ -56,11 +58,21 @@ export const Update = () => {
                         </FormGroup>
                         <FormGroup>
                             <label htmlFor="email">Email</label>
-                            <input type="text" {...register("emails")} placeholder="email@email.com"/>
+                            <input type="text" {...register("emails")} placeholder="email@email.com"
+                            onFocus={() => setIsEmailFocused(true)}
+                            onBlur={() => setIsEmailFocused(false)}/>
+                            {isEmailFocused && (
+                                <span className="tooltip-text">Caso deseje passar mais de um email, separe-os com vírgulas.</span>
+                            )}        
                         </FormGroup>
                         <FormGroup>
                             <label htmlFor="phone">Telefone</label>
-                            <input type="text" {...register("phones")} placeholder="71999999999"/>
+                            <input type="text" {...register("phones")} placeholder="71999999999"
+                            onFocus={() => setIsPhoneFocused(true)}
+                            onBlur={() => setIsPhoneFocused(false)}/>
+                            {isPhoneFocused && (
+                                <span className="tooltip-text">Caso deseje passar mais de um telefone, separe-os com vírgulas.</span>
+                            )}
                         </FormGroup>
                     </FormContainer>
 

@@ -11,8 +11,8 @@ import { UserContext } from "../../context/UserContext";
 export const SignUp = () => {
     const {register, handleSubmit} = useForm();
     const [isEmailFocused, setIsEmailFocused] = useState(false);
-    const [isPhoneFocused, setIsPhoneFocused] = useState(false)
-    const {errorMessage, createUser} = useContext(UserContext)
+    const [isPhoneFocused, setIsPhoneFocused] = useState(false);
+    const {errorMessage, createUser} = useContext(UserContext);
     const navigate = useNavigate();
 
     const onsubmit = async (data) => {

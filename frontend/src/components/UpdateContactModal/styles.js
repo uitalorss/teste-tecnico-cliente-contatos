@@ -43,6 +43,13 @@ export const Content = styled(Dialog.Content)`
       align-items: center;
       justify-content: center;
     }
+    span{
+      &.tooltip-text{
+        margin: -1rem;
+        color: #dcdde1;
+        font-size: .75rem;
+      }
+    }
   }
   @media only screen and (max-width: 575px) {
       min-width: 24rem;
