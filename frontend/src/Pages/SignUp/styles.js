@@ -75,5 +75,10 @@ export const FormGroup = styled.div`
   @media (max-width: 820px) {
     width: 100%;
   }
+  span{
+    &.tooltip-text{
+      font-size: .75rem;
+    }
+  }
 `;
 
