@@ -2,8 +2,12 @@
 
 <!---Esses são exemplos. Veja https://shields.io para outras pessoas ou para personalizar este conjunto de escudos. Você pode querer incluir dependências, status do projeto e informações de licença aqui--->
 
+![Static Badge](https://img.shields.io/badge/status-in_development-yellow?style=for-the-badge)
 ![GitHub repo size](https://img.shields.io/github/repo-size/uitalorss/teste-tecnico-cliente-contatos?style=for-the-badge)
 ![GitHub language count](https://img.shields.io/github/languages/count/uitalorss/teste-tecnico-cliente-contatos?style=for-the-badge)
+![GitHub Contributors](https://img.shields.io/github/contributors/uitalorss/teste-tecnico-cliente-contatos?style=for-the-badge&color=blue)
+
+<img src="frontend/public/image.png">
 
 ### 💡 Um pouco sobre o projeto.
 
