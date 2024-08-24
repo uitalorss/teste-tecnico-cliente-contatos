@@ -44,6 +44,7 @@ O projeto está em desenvolvimento e, apesar do teste não cobrir algumas das si
 - Para instalar o projeto:
     - Configure as variáveis de ambiente em um arquivo `.env`
     - Acesse as pastas **backend** e **frontend** e rode o comando para instalar as dependências no gerenciador de pacotes de sua preferência. `npm`, `yarn`, `pnpm`, etc.
+    - O banco de dados usado é o postgres.
     - Crie um *database* com o nome do banco de dados que você colocou no parâmetro `DB_NAME` do arquivo `.env`.
 
 ## ☕ Usando o projeto
