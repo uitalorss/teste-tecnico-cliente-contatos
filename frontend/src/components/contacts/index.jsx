@@ -10,7 +10,7 @@ import { AuthContext } from "../../context/AuthContext";
 export const Contact = ({contact}) => {
     const{ authenticated } = useContext(AuthContext);
     const {deleteContact, openUpdateModal, setOpenUpdateModal} = useContext(UserContext);
-    console.log(contact);
+    
     return(
         <ContactContainer>
             <ItemContactContainer>

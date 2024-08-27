@@ -15,7 +15,11 @@ export const Dashboard = () => {
     const {SignOutUser} = useContext(AuthContext)
 
     useEffect(() => {
-        load();
+        try {
+            load();
+        } catch (error) {
+            console.log(error.response)
+        }
     }, [])
     return(
         <MainContainer>
@@ -39,7 +43,7 @@ export const Dashboard = () => {
                         <NewContactModal userId={userData.id}/>
                     </Dialog.Root>
                 </HeaderUserDataContainer>
-                {isLoading ? (
+                {userData && isLoading ? (
                     <h2>Carregando</h2>
                 ):(
                     <User user={userData}/>

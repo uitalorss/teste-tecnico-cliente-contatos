@@ -25,9 +25,9 @@ export const UserContextProvider = ({children}) => {
         try {
             setIsLoading(true)
             axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-            const user = await axios.get(`${baseURL}/user`)
+            const user = await axios.get(`${baseURL}/user`);
             setUserData(user.data);
-            setIsLoading(false)
+            setIsLoading(false);
         } catch (error) {
             setAuthenticated(false)
             console.log(error.response)
