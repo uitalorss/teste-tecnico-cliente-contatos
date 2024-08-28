@@ -40,7 +40,8 @@ O projeto está em desenvolvimento e, apesar do teste não cobrir algumas das si
 - Faça o clone do projeto através do comando `git clone https://github.com/uitalorss/teste-tecnico-cliente-contatos.git`
 
 **Você pode pular as etapas de instalação e deploy do projeto caso tenha o Docker e o docker compose instalado em sua máquina, basta configurar as variáveis de ambiente na pasta `backend` e utilizar o comando `docker compose up` para subir todo o ambiente. e acessar a aplicação no link `http://localhost:80`.**
-- Seguindo essa opção, a variável DB_HOST deve ter o valor **clients_db**, que é o nome do container onde está o banco de dados
+`Seguindo essa opção, a variável DB_HOST deve ter o valor **clients_db**, que é o nome do container onde está o banco de dados.`
+
 
 - Para instalar o projeto:
     - Configure as variáveis de ambiente em um arquivo `.env`
