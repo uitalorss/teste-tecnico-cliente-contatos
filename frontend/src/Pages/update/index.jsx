@@ -11,7 +11,7 @@ import { UserContext } from "../../context/UserContext";
 export const Update = () => {
     const [isEmailFocused, setIsEmailFocused] = useState(false);
     const [isPhoneFocused, setIsPhoneFocused] = useState(false);
-    const {register, handleSubmit, setValue} = useForm();
+    const {register, handleSubmit} = useForm();
     const {errorMessage, updateUser, userData, load} = useContext(UserContext);
     const { userId } = useParams();
     const emailsToUpdate = [];
@@ -21,14 +21,9 @@ export const Update = () => {
         load(userId);
 
     }, [])
-    setTimeout(() => {
-        userData.userEmails.map((item) => emailsToUpdate.push(item.email));
-        userData.userPhones.map((item) => phonesToUpdate.push(item.phone));
-        setValue("name", userData.name);
-        setValue("username", userData.userName);
-        setValue("emails", emailsToUpdate.join(", "));
-        setValue("phones", phonesToUpdate.join(", "))
-    }, 1000)
+
+    userData.userEmails.map((item) => emailsToUpdate.push(item.email));
+    userData.userPhones.map((item) => phonesToUpdate.push(item.phone));
 
     const onsubmit = async (data) => {
         data.emails = data.emails.split(",");
@@ -50,15 +45,15 @@ export const Update = () => {
                     <FormContainer>
                         <FormGroup>
                             <label htmlFor="name">Nome</label>
-                            <input type="text" {...register("name")} placeholder="Nome" required/>
+                            <input type="text" {...register("name")} placeholder="Nome" defaultValue={userData.name} required/>
                         </FormGroup>
                         <FormGroup>
                             <label htmlFor="username">Usuário</label>
-                            <input type="text" {...register("username")} placeholder="Usuário" required/>
+                            <input type="text" {...register("username")} placeholder="Usuário" defaultValue={userData.userName} required/>
                         </FormGroup>
                         <FormGroup>
                             <label htmlFor="email">Email</label>
-                            <input type="text" {...register("emails")} placeholder="email@email.com"
+                            <input type="text" {...register("emails")} placeholder="email@email.com" defaultValue={emailsToUpdate.join(", ")}
                             onFocus={() => setIsEmailFocused(true)}
                             onBlur={() => setIsEmailFocused(false)}/>
                             {isEmailFocused && (
@@ -67,7 +62,7 @@ export const Update = () => {
                         </FormGroup>
                         <FormGroup>
                             <label htmlFor="phone">Telefone</label>
-                            <input type="text" {...register("phones")} placeholder="71999999999"
+                            <input type="text" {...register("phones")} placeholder="(71)999999999" defaultValue={phonesToUpdate.join(", ")}
                             onFocus={() => setIsPhoneFocused(true)}
                             onBlur={() => setIsPhoneFocused(false)}/>
                             {isPhoneFocused && (
