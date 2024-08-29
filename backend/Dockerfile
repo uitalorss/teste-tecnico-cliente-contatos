@@ -4,6 +4,4 @@ WORKDIR /home/app
 
 COPY . .
 
-RUN npm install
-
-RUN npm install -g @nestjs/cli
+CMD [ ".docker/entrypoint.sh" ]
