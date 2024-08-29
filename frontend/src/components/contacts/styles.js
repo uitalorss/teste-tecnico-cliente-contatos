@@ -37,13 +37,24 @@ export const ItemContactContainer = styled.table`
             }
             td{
                 span{
-                    display: none;
+                    &.data{
+                        display: none;
+                    }
+                    &.tooltip-text{
+                        margin: -1rem 0;
+                        color: #dcdde1;
+                        font-size: .75rem;
+                    }
                 }
                 input{
                     width: 100%;
                     padding: .5rem;
                     border-radius: 4px;
                     border: none;
+                    &.special-input{
+                        display: flex;
+                        flex-direction: column;
+                    }
                 }
             }
         }

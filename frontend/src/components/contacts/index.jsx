@@ -41,7 +41,7 @@ export const Contact = ({contact}) => {
                                 <input type="text" placeholder="Nome" {...register("name")} defaultValue={contact.name}/>
                             </td>
                         ):(
-                            <td>
+                            <td className="data">
                                 <span>{contact.name}</span>
                             </td>
                         )
@@ -55,7 +55,7 @@ export const Contact = ({contact}) => {
                     {updateMode ? (
                         <tr>
                             <th></th>
-                            <td>
+                            <td className="special-input">
                                 <input type="text" placeholder="E-mail" {...register("emails")} defaultValue={emailsToUpdate}
                                 onFocus={() => setIsEmailFocused(true)}
                                 onBlur={() => setIsEmailFocused(false)}/>
@@ -70,7 +70,7 @@ export const Contact = ({contact}) => {
                             return(
                                 <tr key={email.id}>
                                     <th></th>
-                                    <td >{email.email}</td>
+                                    <td>{email.email}</td>
                                 </tr>
                                 )   
                             })} 
@@ -84,7 +84,7 @@ export const Contact = ({contact}) => {
                     {updateMode ? (
                         <tr>
                             <th></th>
-                            <td>
+                            <td className="special-input">
                                 <input type="text" placeholder="Telefone" {...register("phones")} defaultValue={phonesToUpdate}
                                 onFocus={() => setIsPhoneFocused(true)}
                                 onBlur={() => setIsPhoneFocused(false)}/>
