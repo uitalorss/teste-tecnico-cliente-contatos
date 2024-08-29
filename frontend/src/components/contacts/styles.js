@@ -11,13 +11,43 @@ export const ContactContainer = styled.div`
 `
 
 export const ItemContactContainer = styled.table`
-    tr {
-        th {
-            text-align: left;
-            width: 30%;
+    &.data{
+        tr {
+            th {
+                text-align: left;
+                width: 30%;
+            }
+            td{
+              &.data{
+                input{
+                    display: none;
+                }
+                span{
+                    color: #c0c0c0;
+                }
+              }  
+            }
         }
     }
-
+    &.input{
+        tr{
+            th {
+                text-align: left;
+                width: 30%;
+            }
+            td{
+                span{
+                    display: none;
+                }
+                input{
+                    width: 100%;
+                    padding: .5rem;
+                    border-radius: 4px;
+                    border: none;
+                }
+            }
+        }
+    }
 `
 
 export const Example = styled.table`
@@ -52,8 +82,14 @@ export const ActionsContactContainer = styled.div`
         font-weight: bold;
         cursor: pointer;
         &.delete{
-            background: #c23616
+            background: #c23616;
         };
+        &.updateActive{
+            background: #c23616
+        }
+        &.updateInactive{
+            display: none;
+        }
 
 }
 `

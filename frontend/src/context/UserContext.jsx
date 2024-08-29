@@ -120,13 +120,12 @@ export const UserContextProvider = ({children}) => {
             await axios.put(`${baseURL}/user/contact/${contactId}`,data,axiosConfig);
             alert("Contato atualizado com sucesso.");
             load();
-            setOpenUpdateModal(false);
         } catch (error) {
             if(error.response.data.message === "Validation failed"){
-                console.log(error.response.data.errors[0].message)
+                alert(error.response.data.errors[0].message)
                 setErrorMessage(error.response.data.errors[0].message)
             }else{
-                console.log(error.response.data.message)
+                alert(error.response.data.message)
                 setErrorMessage(error.response.data.message)
             }
         }
