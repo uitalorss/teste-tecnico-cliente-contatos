@@ -58,14 +58,14 @@ Para inicializar o projeto, acesse as pastas **backend** e **frontend** e rode o
 
     ```
     npm run migration:run
-    npm run start:prod
+    npm run start:dev
     ```
 
     yarn:
 
     ```
     yarn migration:run
-    yarn start:prod
+    yarn start:dev
     ```
     
 - front-end
