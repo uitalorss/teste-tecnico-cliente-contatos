@@ -13,8 +13,8 @@ export class ContactController {
   @UseGuards(AuthGuard)
   @Post()
   @HttpCode(201)
-  public async create(@Res() res, @Body(new ZodValidationPipe(createContactSchema)) createContactRequest: CreateContactRequestDTO) {
-    await this.contactService.create({ user_id: res.user, name: createContactRequest.name, emails: createContactRequest.emails, phones: createContactRequest.phones });
+  public async create(@Req() req, @Res() res, @Body(new ZodValidationPipe(createContactSchema)) createContactRequest: CreateContactRequestDTO) {
+    await this.contactService.create({ user_id: req.user, name: createContactRequest.name, emails: createContactRequest.emails, phones: createContactRequest.phones });
     return res.json({ message: "contato criado com sucesso." });
   }
 

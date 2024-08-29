@@ -43,6 +43,10 @@ export class UserService {
   }
 
   public async findUser(id: string): Promise<ResponseUserDTO> {
+    if (!id) {
+      throw new BadRequestException("ID inválido");
+    }
+
     const user = await this.userRepository.findOne({
       where: {
         id,
@@ -50,10 +54,11 @@ export class UserService {
       relations: {
         userEmails: true,
         userPhones: true,
-        contacts: true,
       },
     });
+
     if (!user) {
+      console.log("to aqui também");
       throw new NotFoundException("Usuário não encontrado.");
     }
     user.contacts = await this.contactService.find(user);
